@@ -1,0 +1,16 @@
+{
+  "name": "Hacker's House Golf Club",
+  "short_name": "HHGC",
+  "description": "Premium indoor golf. Real clubhouse energy. Questionable swings welcome.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4E9D8",
+  "theme_color": "#0F2E1E",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

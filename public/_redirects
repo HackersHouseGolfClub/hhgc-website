@@ -1,0 +1,8 @@
+# Cloudflare Pages redirects
+/home  /  301
+/join  /#join  302
+/membership  /#memberships  302
+/memberships  /#memberships  302
+/leagues  /#leagues  302
+/events  /#events  302
+/location  /#location  302
