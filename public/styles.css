@@ -913,3 +913,1236 @@ ul { margin: 0; padding: 0; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* =========================================================
+   v1.2.1 responsive layout corrections
+   Prevents root-level horizontal overflow and improves
+   tablet/mobile hierarchy, spacing, and interactive controls.
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow-x: clip) {
+  html,
+  body { overflow-x: clip; }
+}
+
+main,
+section,
+.site-header,
+.site-footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+.hero-grid > *,
+.split > *,
+.location-grid > *,
+.faq-grid > *,
+.experience-panel > *,
+.membership-explorer > *,
+.membership-detail > *,
+.updates-card > *,
+.footer-grid > * {
+  min-width: 0;
+}
+
+.simulator-card,
+.experience-shell,
+.membership-explorer,
+.membership-detail,
+.map-card,
+.updates-card {
+  width: 100%;
+}
+
+@media (max-width: 1050px) {
+  .hero {
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  .hero-grid {
+    gap: 3rem;
+  }
+
+  .simulator-card {
+    width: min(100%, 720px);
+    justify-self: center;
+  }
+
+  .hero-copy {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 720px) {
+  :root { --header-height: 68px; }
+
+  .container {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  h1 {
+    font-size: clamp(3.15rem, 14vw, 5.25rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  h2 {
+    font-size: clamp(2.35rem, 10.5vw, 3.6rem);
+    line-height: 0.98;
+  }
+
+  .site-header {
+    backdrop-filter: blur(12px);
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-logo {
+    width: 168px;
+    max-height: 50px;
+  }
+
+  .nav-toggle {
+    flex: 0 0 auto;
+    padding: 0.65rem 0.78rem;
+  }
+
+  .site-nav {
+    padding-inline: 16px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 3.2rem 0 2.2rem;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .hero-watermark {
+    top: 3%;
+    right: -34%;
+    width: 112vw;
+    opacity: 0.025;
+  }
+
+  .hero-grid {
+    gap: 2.25rem;
+  }
+
+  .hero-lede {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    gap: 0.7rem;
+    margin: 1.6rem 0;
+  }
+
+  .hero-proof {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .hero-proof span {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .simulator-card {
+    padding: 0.72rem;
+    border-radius: 20px;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .simulator-card::before {
+    filter: blur(8px);
+  }
+
+  .simulator-topbar {
+    gap: 0.5rem;
+    padding: 0.15rem 0.15rem 0.65rem;
+    font-size: 0.57rem;
+    letter-spacing: 0.05em;
+  }
+
+  .simulator-topbar strong {
+    text-align: right;
+  }
+
+  .simulator-screen {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    border-width: 6px;
+    border-radius: 13px;
+  }
+
+  .screen-badge {
+    left: 0.55rem;
+    bottom: 0.55rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.05em;
+  }
+
+  .launch-data {
+    margin: 0.58rem 0;
+    border-radius: 12px;
+  }
+
+  .launch-data div {
+    min-width: 0;
+    padding: 0.65rem 0.38rem;
+    text-align: center;
+  }
+
+  .launch-data span {
+    font-size: 0.5rem;
+    letter-spacing: 0.035em;
+  }
+
+  .launch-data strong {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .mode-switcher {
+    gap: 0.35rem;
+  }
+
+  .mode-button {
+    min-width: 0;
+    padding: 0.58rem 0.25rem;
+    font-size: 0.53rem;
+    letter-spacing: 0.045em;
+  }
+
+  .house-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 2.2rem;
+  }
+
+  .house-stats div {
+    min-height: 108px;
+    padding: 0.95rem;
+  }
+
+  .house-stats div:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .house-stats div:nth-child(-n+2) {
+    border-bottom: 1px solid rgba(244, 233, 216, 0.14);
+  }
+
+  .house-stats strong {
+    font-size: 2.35rem;
+  }
+
+  .house-stats span {
+    font-size: 0.73rem;
+    line-height: 1.35;
+  }
+
+  .split,
+  .location-grid,
+  .faq-grid {
+    gap: 1.5rem;
+  }
+
+  .copy-stack {
+    font-size: 0.98rem;
+  }
+
+  .experience-shell {
+    margin-top: 2.2rem;
+    border-radius: 20px;
+  }
+
+  .experience-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .experience-tab {
+    min-height: 68px;
+    gap: 0.45rem;
+    padding: 0.75rem 0.7rem;
+    font-size: 0.64rem;
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+
+  .experience-tab:nth-child(2n) {
+    border-right: 0 !important;
+  }
+
+  .experience-tab:nth-child(n+3) {
+    border-bottom: 0 !important;
+  }
+
+  .experience-tab span {
+    font-size: 1.15rem;
+  }
+
+  .experience-panel {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .experience-panel h3 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .experience-copy > p:not(.mini-label) {
+    font-size: 0.95rem;
+  }
+
+  .experience-visual {
+    min-height: 235px;
+    border-radius: 18px;
+  }
+
+  .data-ring {
+    width: 128px;
+    height: 128px;
+  }
+
+  .data-ring span {
+    font-size: 2.35rem;
+  }
+
+  .feature-grid {
+    margin-top: 1.25rem;
+  }
+
+  .feature-card {
+    min-height: 0;
+    padding: 1.2rem;
+  }
+
+  .feature-number {
+    margin-bottom: 1rem;
+    font-size: 2.15rem;
+  }
+
+  .membership-explorer {
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+
+  .membership-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+  }
+
+  .membership-option {
+    min-width: 0;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 0.55rem;
+    padding: 0.68rem;
+    border-radius: 14px;
+    scroll-snap-align: none;
+  }
+
+  .membership-option:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .membership-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+
+  .membership-option strong {
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .membership-option small {
+    font-size: 0.62rem;
+    line-height: 1.25;
+  }
+
+  .membership-detail {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 20px;
+  }
+
+  .membership-detail::before {
+    right: -1rem;
+    bottom: -2.25rem;
+    font-size: 10rem;
+  }
+
+  .membership-detail h3 {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+  }
+
+  .membership-benefits {
+    align-self: auto;
+    padding: 1rem;
+  }
+
+  .membership-note {
+    gap: 0.5rem;
+  }
+
+  .event-grid {
+    margin-top: 2.25rem;
+  }
+
+  .event-card {
+    min-height: 0;
+    padding: 1.2rem;
+    border-radius: 18px;
+  }
+
+  .event-card > span {
+    margin-bottom: 1.25rem;
+    font-size: 2.15rem;
+  }
+
+  .map-card {
+    border-radius: 20px;
+  }
+
+  .faq-item button {
+    padding: 1rem;
+    font-size: 0.78rem;
+  }
+
+  .faq-answer {
+    padding: 0 1rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .updates-section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .updates-card {
+    gap: 1.25rem;
+    padding: 1.3rem;
+    border-radius: 20px;
+  }
+
+  .updates-card h2 {
+    font-size: clamp(2.35rem, 10vw, 3.25rem);
+  }
+
+  .footer-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 13.5vw, 4.2rem);
+  }
+
+  .header-inner {
+    gap: 0.65rem;
+  }
+
+  .brand-logo {
+    width: 146px;
+  }
+
+  .nav-toggle {
+    padding: 0.6rem 0.72rem;
+  }
+
+  .hero {
+    padding-top: 2.65rem;
+  }
+
+  .screen-badge {
+    display: none;
+  }
+
+  .house-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .house-stats div {
+    border-right: 1px solid rgba(244, 233, 216, 0.14);
+    border-bottom: 1px solid rgba(244, 233, 216, 0.14);
+  }
+
+  .house-stats div:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .house-stats div:nth-child(n+3) {
+    border-bottom: 0;
+  }
+
+  .experience-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .experience-tab {
+    min-height: 64px;
+  }
+
+  .membership-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .membership-option {
+    grid-template-columns: 34px minmax(0, 1fr);
+    padding: 0.62rem;
+  }
+
+  .membership-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .footer-brand img {
+    width: 160px;
+  }
+}
+
+@media (max-width: 350px) {
+  .brand-logo {
+    width: 132px;
+  }
+
+  .membership-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-option:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
+/* Hero flow correction: the primary grid and at-a-glance row must stack vertically. */
+.hero {
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.hero-copy h1 {
+  font-size: clamp(4rem, 6vw, 5.8rem);
+  max-width: 8.5ch;
+}
+
+@media (max-width: 1050px) {
+  .hero {
+    align-items: stretch;
+  }
+
+  .hero-copy h1 {
+    max-width: 10ch;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-copy h1 {
+    max-width: none;
+    font-size: clamp(2.9rem, 12.5vw, 4.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-copy h1 {
+    font-size: clamp(2.7rem, 12vw, 4rem);
+  }
+}
+
+
+/* =========================================================
+   v1.2.2 integrated brand artwork
+   Uses the HH broken-club PNG as immersive background art
+   across hero and key sections while preserving readability.
+   ========================================================= */
+
+.hero,
+.memberships-section,
+.events-section,
+.location-section,
+.updates-section,
+.faq-section {
+  isolation: isolate;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -10vw -8vw auto;
+  width: min(60vw, 900px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-cream.webp') center/contain no-repeat;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 24px 40px rgba(0,0,0,0.18));
+}
+
+.hero-grid,
+.house-stats,
+.events-section > .container,
+.memberships-section > .container,
+.location-section > .container,
+.faq-section > .container,
+.updates-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.memberships-section::before {
+  content: "";
+  position: absolute;
+  right: -8vw;
+  top: 4rem;
+  width: min(38vw, 520px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-forest.webp') center/contain no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.memberships-section::after {
+  content: "";
+  position: absolute;
+  inset: auto auto -2rem -7vw;
+  width: min(24vw, 320px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-gold.webp') center/contain no-repeat;
+  opacity: 0.08;
+  transform: rotate(8deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.events-section::before {
+  content: "";
+  position: absolute;
+  left: -10vw;
+  top: 0;
+  width: min(36vw, 500px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-gold.webp') center/contain no-repeat;
+  opacity: 0.1;
+  transform: rotate(-10deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.location-section::after {
+  content: "";
+  position: absolute;
+  right: -12vw;
+  bottom: -4rem;
+  width: min(42vw, 600px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-forest.webp') center/contain no-repeat;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.faq-section::before {
+  content: "";
+  position: absolute;
+  left: -8vw;
+  top: 2rem;
+  width: min(28vw, 380px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-gold.webp') center/contain no-repeat;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.updates-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.updates-card::after {
+  content: "";
+  position: absolute;
+  right: -1.5rem;
+  bottom: -3rem;
+  width: min(28vw, 340px);
+  aspect-ratio: 3200 / 2955;
+  background: url('assets/images/hh-brokenclub-cream.webp') center/contain no-repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.updates-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1050px) {
+  .hero::after {
+    width: min(72vw, 760px);
+    right: -20vw;
+    bottom: -4vw;
+    opacity: 0.11;
+  }
+
+  .memberships-section::before {
+    width: min(46vw, 460px);
+    right: -12vw;
+  }
+
+  .events-section::before,
+  .location-section::after,
+  .faq-section::before {
+    opacity: 0.05;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero::after {
+    width: 125vw;
+    right: -36vw;
+    bottom: 14%;
+    opacity: 0.09;
+  }
+
+  .memberships-section::before {
+    width: 78vw;
+    right: -24vw;
+    top: auto;
+    bottom: 16rem;
+    opacity: 0.05;
+  }
+
+  .memberships-section::after,
+  .events-section::before,
+  .location-section::after,
+  .faq-section::before {
+    width: 56vw;
+    opacity: 0.045;
+  }
+
+  .events-section::before {
+    left: auto;
+    right: -18vw;
+    top: 1rem;
+    transform: rotate(-4deg);
+  }
+
+  .location-section::after {
+    right: -22vw;
+    bottom: 5rem;
+  }
+
+  .faq-section::before {
+    left: auto;
+    right: -12vw;
+    top: 0;
+  }
+
+  .updates-card::after {
+    width: 58vw;
+    right: -12vw;
+    bottom: -1.5rem;
+    opacity: 0.08;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero::after {
+    width: 150vw;
+    right: -52vw;
+    bottom: 18%;
+    opacity: 0.08;
+  }
+
+  .memberships-section::before,
+  .memberships-section::after,
+  .events-section::before,
+  .location-section::after,
+  .faq-section::before {
+    opacity: 0.035;
+  }
+
+  .updates-card::after {
+    width: 78vw;
+    right: -20vw;
+    opacity: 0.07;
+  }
+}
+
+/* =========================================================
+   v1.2.3 immersive concept renderings
+   The uploaded renderings are treated as environmental art,
+   layered beneath content and controls rather than inserted
+   as isolated image blocks.
+   ========================================================= */
+
+.hero {
+  background:
+    linear-gradient(90deg, rgba(7, 23, 15, 0.97) 0%, rgba(7, 23, 15, 0.91) 39%, rgba(7, 23, 15, 0.67) 70%, rgba(7, 23, 15, 0.78) 100%),
+    linear-gradient(180deg, rgba(15, 46, 30, 0.10), rgba(7, 23, 15, 0.60)),
+    url('assets/renderings/sophisticated_golf_lounge_with_simulators.webp') center 48% / cover no-repeat;
+  background-color: var(--deep);
+}
+
+.hero::before {
+  background: linear-gradient(90deg, rgba(176, 141, 87, 0.38), rgba(176, 141, 87, 0.09));
+  border: 0;
+  height: 1px;
+  inset: auto 28px 28px;
+  z-index: 1;
+}
+
+.hero-watermark {
+  opacity: 0.025;
+}
+
+.simulator-card {
+  background: rgba(7, 23, 15, 0.72);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+
+.simulator-screen {
+  min-height: 360px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: saturate(0.92) contrast(1.05);
+}
+
+.simulator-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(7, 23, 15, 0.04) 45%, rgba(7, 23, 15, 0.60) 100%),
+    linear-gradient(90deg, rgba(7, 23, 15, 0.08), transparent 42%, rgba(7, 23, 15, 0.10));
+  pointer-events: none;
+}
+
+.simulator-screen[data-hero-screen="practice"] {
+  background-image: url('assets/renderings/modern_golf_simulator_lounge_retreat.webp');
+  background-position: center 48%;
+}
+
+.simulator-screen[data-hero-screen="league"] {
+  background-image: url('assets/renderings/luxurious_golf_lounge_and_simulator_room.webp');
+  background-position: center 48%;
+}
+
+.simulator-screen[data-hero-screen="event"] {
+  background-image: url('assets/renderings/sophisticated_golf_lounge_with_simulators.webp');
+  background-position: center 54%;
+}
+
+.simulator-screen .screen-sky,
+.simulator-screen .screen-mountains,
+.simulator-screen .screen-fairway,
+.simulator-screen .screen-green,
+.simulator-screen .screen-flag {
+  display: none;
+}
+
+.shot-tracer,
+.screen-badge {
+  z-index: 2;
+}
+
+/* The experience section receives a soft environmental wash behind the cards. */
+#experience {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(244, 233, 216, 0.99) 0%, rgba(244, 233, 216, 0.96) 54%, rgba(244, 233, 216, 0.84) 100%),
+    url('assets/renderings/modern_golf_simulator_lounge_retreat.webp') right 30% / 54% auto no-repeat,
+    var(--cream);
+}
+
+#experience > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.concept-art-grid {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 1rem;
+  margin-top: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.concept-art {
+  position: relative;
+  min-height: clamp(390px, 38vw, 560px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1px solid rgba(15, 46, 30, 0.15);
+  border-radius: 28px;
+  background-position: center;
+  background-size: cover;
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+
+.concept-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(7, 23, 15, 0.02) 24%, rgba(7, 23, 15, 0.16) 54%, rgba(7, 23, 15, 0.91) 100%),
+    linear-gradient(90deg, rgba(7, 23, 15, 0.24), transparent 62%);
+}
+
+.concept-art-simulator {
+  background-image: url('assets/renderings/luxurious_golf_lounge_and_simulator_room.webp');
+  background-position: center 50%;
+}
+
+.concept-art-lounge {
+  background-image: url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp');
+  background-position: center 48%;
+}
+
+.concept-art-copy {
+  width: min(100%, 610px);
+  padding: clamp(1.35rem, 3vw, 2.4rem);
+  color: var(--cream);
+}
+
+.concept-art-copy h3 {
+  max-width: 17ch;
+  color: var(--cream);
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(2rem, 3.3vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+.concept-art-copy p:last-child {
+  max-width: 55ch;
+  margin-bottom: 0;
+  color: rgba(244, 233, 216, 0.80);
+}
+
+/* Memberships use lounge imagery as an environmental edge, not a separate photo. */
+.memberships-section {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(251, 247, 240, 1) 0%, rgba(251, 247, 240, 0.985) 54%, rgba(251, 247, 240, 0.86) 73%, rgba(251, 247, 240, 0.64) 100%),
+    url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') right center / 50% 100% no-repeat,
+    var(--cream-2);
+}
+
+.memberships-section::before {
+  background-image: url('assets/images/hh-brokenclub-forest.webp');
+  opacity: 0.045;
+}
+
+.membership-explorer,
+.membership-detail {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Events are built over a real room scene with a dark hospitality overlay. */
+.events-section {
+  background:
+    linear-gradient(100deg, rgba(7, 23, 15, 0.97) 0%, rgba(7, 23, 15, 0.90) 48%, rgba(7, 23, 15, 0.79) 100%),
+    linear-gradient(180deg, rgba(15, 46, 30, 0.22), rgba(7, 23, 15, 0.80)),
+    url('assets/renderings/sophisticated_golf_lounge_with_simulators.webp') center / cover no-repeat;
+  background-attachment: scroll;
+}
+
+.events-section::before {
+  background-image: url('assets/images/hh-brokenclub-gold.webp');
+  opacity: 0.07;
+}
+
+.event-card {
+  background: rgba(7, 23, 15, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.event-art-banner {
+  position: relative;
+  min-height: 340px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: end;
+  overflow: hidden;
+  margin-top: clamp(1.5rem, 4vw, 3.25rem);
+  padding: clamp(1.4rem, 4vw, 3rem);
+  border: 1px solid rgba(244, 233, 216, 0.18);
+  border-radius: 28px;
+  background:
+    linear-gradient(90deg, rgba(7, 23, 15, 0.94), rgba(7, 23, 15, 0.55) 54%, rgba(7, 23, 15, 0.32)),
+    url('assets/renderings/luxurious_golf_lounge_and_simulator_room.webp') center / cover no-repeat;
+  box-shadow: var(--shadow-dark);
+}
+
+.event-art-banner h3 {
+  max-width: 17ch;
+  margin-bottom: 0;
+  color: var(--cream);
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+.event-art-banner > p {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(244, 233, 216, 0.18);
+  border-radius: 16px;
+  background: rgba(7, 23, 15, 0.58);
+  color: rgba(244, 233, 216, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* The arrival corridor becomes a directional environmental layer. */
+.location-section {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(244, 233, 216, 0.99) 0%, rgba(244, 233, 216, 0.96) 55%, rgba(244, 233, 216, 0.73) 100%),
+    url('assets/renderings/upscale_golf_themed_corridor_lounge.webp') right center / 45% 100% no-repeat,
+    var(--cream);
+}
+
+.location-section::after {
+  opacity: 0.035;
+}
+
+.map-card {
+  background: rgba(255,255,255,0.90);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* FAQ uses a low-contrast lounge atmosphere while preserving reading comfort. */
+.faq-section {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(251, 247, 240, 1) 0%, rgba(251, 247, 240, 0.975) 64%, rgba(251, 247, 240, 0.84) 100%),
+    url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') right center / 44% 100% no-repeat,
+    var(--cream-2);
+}
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.91);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Final call-to-action becomes a hospitality scene with the copy integrated into it. */
+.updates-card {
+  background:
+    linear-gradient(90deg, rgba(7, 23, 15, 0.95) 0%, rgba(7, 23, 15, 0.88) 53%, rgba(7, 23, 15, 0.58) 100%),
+    url('assets/renderings/cozy_bar_scene_with_drinks_and_ambiance.webp') center / cover no-repeat;
+}
+
+.updates-card::after {
+  background-image: url('assets/images/hh-brokenclub-cream.webp');
+  opacity: 0.08;
+}
+
+@media (max-width: 1050px) {
+  .hero {
+    background-position: 58% center;
+  }
+
+  #experience {
+    background:
+      linear-gradient(180deg, rgba(244, 233, 216, 0.99), rgba(244, 233, 216, 0.95)),
+      url('assets/renderings/modern_golf_simulator_lounge_retreat.webp') center / cover no-repeat;
+  }
+
+  .concept-art-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .memberships-section,
+  .location-section,
+  .faq-section {
+    background-size: auto, cover;
+    background-position: center, center;
+  }
+
+  .memberships-section {
+    background:
+      linear-gradient(180deg, rgba(251, 247, 240, 0.99) 0%, rgba(251, 247, 240, 0.96) 68%, rgba(251, 247, 240, 0.90) 100%),
+      url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') center / cover no-repeat;
+  }
+
+  .location-section {
+    background:
+      linear-gradient(180deg, rgba(244, 233, 216, 0.99) 0%, rgba(244, 233, 216, 0.96) 70%, rgba(244, 233, 216, 0.90) 100%),
+      url('assets/renderings/upscale_golf_themed_corridor_lounge.webp') center / cover no-repeat;
+  }
+
+  .faq-section {
+    background:
+      linear-gradient(180deg, rgba(251, 247, 240, 0.995) 0%, rgba(251, 247, 240, 0.97) 76%, rgba(251, 247, 240, 0.92) 100%),
+      url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') center / cover no-repeat;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    background:
+      linear-gradient(180deg, rgba(7, 23, 15, 0.94) 0%, rgba(7, 23, 15, 0.90) 48%, rgba(7, 23, 15, 0.96) 100%),
+      url('assets/renderings/sophisticated_golf_lounge_with_simulators.webp') 58% center / cover no-repeat;
+  }
+
+  .simulator-screen {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .simulator-screen[data-hero-screen="practice"] {
+    background-position: 57% center;
+  }
+
+  .simulator-screen[data-hero-screen="league"],
+  .simulator-screen[data-hero-screen="event"] {
+    background-position: center;
+  }
+
+  #experience {
+    background:
+      linear-gradient(180deg, rgba(244, 233, 216, 0.995), rgba(244, 233, 216, 0.97)),
+      url('assets/renderings/modern_golf_simulator_lounge_retreat.webp') center / cover no-repeat;
+  }
+
+  .concept-art-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .concept-art {
+    min-height: 390px;
+    border-radius: 20px;
+  }
+
+  .concept-art-simulator {
+    background-position: 58% center;
+  }
+
+  .concept-art-lounge {
+    background-position: 48% center;
+  }
+
+  .concept-art-copy h3 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .memberships-section {
+    background:
+      linear-gradient(180deg, rgba(251, 247, 240, 0.995) 0%, rgba(251, 247, 240, 0.975) 72%, rgba(251, 247, 240, 0.94) 100%),
+      url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') 58% center / cover no-repeat;
+  }
+
+  .events-section {
+    background:
+      linear-gradient(180deg, rgba(7, 23, 15, 0.96), rgba(7, 23, 15, 0.91)),
+      url('assets/renderings/sophisticated_golf_lounge_with_simulators.webp') 50% center / cover no-repeat;
+  }
+
+  .event-art-banner {
+    min-height: 420px;
+    grid-template-columns: 1fr;
+    align-content: end;
+    border-radius: 20px;
+    background:
+      linear-gradient(180deg, rgba(7, 23, 15, 0.18), rgba(7, 23, 15, 0.94) 76%),
+      url('assets/renderings/luxurious_golf_lounge_and_simulator_room.webp') 58% center / cover no-repeat;
+  }
+
+  .event-art-banner > p {
+    font-size: 0.88rem;
+  }
+
+  .location-section {
+    background:
+      linear-gradient(180deg, rgba(244, 233, 216, 0.995), rgba(244, 233, 216, 0.97)),
+      url('assets/renderings/upscale_golf_themed_corridor_lounge.webp') 50% center / cover no-repeat;
+  }
+
+  .faq-section {
+    background:
+      linear-gradient(180deg, rgba(251, 247, 240, 0.998), rgba(251, 247, 240, 0.975)),
+      url('assets/renderings/cozy_upscale_lounge_with_intimate_seating.webp') center / cover no-repeat;
+  }
+
+  .updates-card {
+    background:
+      linear-gradient(180deg, rgba(7, 23, 15, 0.94) 0%, rgba(7, 23, 15, 0.90) 68%, rgba(7, 23, 15, 0.78) 100%),
+      url('assets/renderings/cozy_bar_scene_with_drinks_and_ambiance.webp') 42% center / cover no-repeat;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    background-position: 56% center;
+  }
+
+  .concept-art {
+    min-height: 350px;
+  }
+
+  .concept-art-copy {
+    padding: 1.2rem;
+  }
+
+  .event-art-banner {
+    min-height: 390px;
+    padding: 1.2rem;
+  }
+
+  .event-art-banner h3 {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+}

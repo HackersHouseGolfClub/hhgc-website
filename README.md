@@ -79,3 +79,9 @@ Before actively promoting the website:
 3. Test desktop, tablet, and mobile rendering.
 4. Keep rates, exact address, simulator brand, opening date, and House Key terms unpublished until approved.
 5. Connect lead generation only after submissions, confirmation messages, owner notifications, and backup storage are tested end to end.
+
+
+## v1.2.2
+- Integrated HH broken-club PNG mockup as immersive background and page art across the hero, memberships, events, location, FAQ, and updates sections.
+- Preserved responsive layout for desktop, tablet, and mobile.
+- Continued use of background layering rather than pasted standalone images.

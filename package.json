@@ -1,8 +1,8 @@
 {
   "name": "hhgc-website-v1",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "private": true,
-  "description": "Hacker's House Golf Club Website v1.2 pre-launch credibility and interactive detail pass for Cloudflare Workers static assets.",
+  "description": "Hacker's House Golf Club Website v1.2.2 integrated concept renderings, branded artwork, and responsive layout correction for Cloudflare Workers static assets.",
   "scripts": {
     "build": "echo \"Static site: no build step required.\"",
     "deploy": "wrangler deploy"

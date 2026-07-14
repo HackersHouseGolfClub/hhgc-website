@@ -10,7 +10,7 @@
   <meta property="og:description" content="Serious Golf. Questionable Swings. A premium indoor golf clubhouse planned for western Lake Norman.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://hackershousegolf.com/">
-  <meta property="og:image" content="https://hackershousegolf.com/assets/images/hhgc-logo-transparent.png">
+  <meta property="og:image" content="https://hackershousegolf.com/assets/renderings/sophisticated_golf_lounge_with_simulators.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://hackershousegolf.com/">
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
@@ -18,7 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" as="image" href="assets/renderings/sophisticated_golf_lounge_with_simulators.webp">
+  <link rel="preload" as="image" href="assets/renderings/modern_golf_simulator_lounge_retreat.webp">
+  <link rel="stylesheet" href="styles.css?v=1.2.3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -184,9 +186,26 @@
           <p>Leagues, challenges, tournaments, member gatherings, local partnerships, and repeat reasons to return.</p>
         </article>
       </div>
+
+      <div class="container concept-art-grid reveal" aria-label="Hacker’s House concept rendering preview">
+        <article class="concept-art concept-art-simulator">
+          <div class="concept-art-copy">
+            <p class="mini-label">Concept Rendering</p>
+            <h3>A golf-first room that still feels like a clubhouse.</h3>
+            <p>Warm finishes, comfortable seating, and simulator technology integrated into the social experience.</p>
+          </div>
+        </article>
+        <article class="concept-art concept-art-lounge">
+          <div class="concept-art-copy">
+            <p class="mini-label">Clubhouse Atmosphere</p>
+            <h3>Built for the hour after the round, too.</h3>
+            <p>Premium but approachable spaces for members, friends, and guests to settle in and stay awhile.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section id="memberships" class="section section-white" data-section>
+    <section id="memberships" class="section section-white memberships-section" data-section>
       <div class="container section-heading reveal">
         <p class="eyebrow">Membership Preview</p>
         <h2>Choose the relationship you want with the House.</h2>
@@ -277,6 +296,14 @@
           <ul><li>Group-friendly formats</li><li>Local partnership opportunities</li><li>Year-round scheduling</li></ul>
         </article>
       </div>
+
+      <div class="container event-art-banner reveal">
+        <div>
+          <p class="mini-label">The Round After the Round</p>
+          <h3>Competition, conversation, and clubhouse energy in one room.</h3>
+        </div>
+        <p>Concept rendering shown for atmosphere and design direction; final finishes will follow the selected site and construction plan.</p>
+      </div>
     </section>
 
     <section id="location" class="section section-cream location-section" data-section>
@@ -301,7 +328,7 @@
       </div>
     </section>
 
-    <section id="faq" class="section section-white" data-section>
+    <section id="faq" class="section section-white faq-section" data-section>
       <div class="container faq-grid">
         <div class="faq-intro reveal">
           <p class="eyebrow">Frequently Asked Questions</p>
@@ -375,10 +402,10 @@
     </div>
     <div class="container footer-bottom">
       <span>© <span data-year></span> Hacker’s House Golf Club.</span>
-      <span>Website v1.2 • Pre-Launch Credibility &amp; Detail Pass</span>
+      <span>Website v1.2.3 • Integrated Renderings Pass</span>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=1.2.3"></script>
 </body>
 </html>
