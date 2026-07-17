@@ -37,3 +37,11 @@ footer{background:var(--ink);padding:80px 5vw 35px;display:grid;grid-template-co
 /* Preserve the complete HH mark in the location graphic. */
 .location-marker{min-width:150px;overflow:visible}
 .location-marker img{width:108px;height:auto;margin:0 auto 8px;border-radius:0;overflow:visible}
+
+/* Performance mode: use the native cursor and avoid continuous landing-page paint work. */
+.house-cursor{display:none!important}
+body,body a,body button,body summary{cursor:auto!important}
+.hero-render{animation:none;transform:scale(1.04)}
+.space-reveal__image{background-attachment:scroll}
+.sim-card,.space-reveal__panel{backdrop-filter:none}
+.intro,.feature-grid,.visual-story,.membership,.events,.location,.updates,.faq,footer{content-visibility:auto;contain-intrinsic-size:800px}
