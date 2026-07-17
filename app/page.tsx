@@ -65,6 +65,37 @@ function ImpactLab() {
   );
 }
 
+function LoungeRender() {
+  const figure = useRef<HTMLElement>(null);
+  const [poweredOn, setPoweredOn] = useState(false);
+
+  useEffect(() => {
+    const node = figure.current;
+    if (!node) return;
+    if (!("IntersectionObserver" in window)) {
+      setPoweredOn(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setPoweredOn(true);
+      observer.disconnect();
+    }, { threshold: .42, rootMargin: "0px 0px -8% 0px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <figure ref={figure} className={`visual-story__render lounge-render${poweredOn ? " is-powered" : ""}`}>
+      <img src="/images/hh-lounge-render.webp" alt="Concept rendering of the Hacker’s House lounge and simulator bay" />
+      <span className="sim-screen-display" aria-hidden="true">
+        <img className="sim-screen-logo" src={ICON} alt="" />
+      </span>
+      <figcaption>Concept rendering • Lounge &amp; simulator bay</figcaption>
+    </figure>
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -195,10 +226,7 @@ export default function Home() {
           <h2>Real reps.<br /><em>Zero rain checks.</em></h2>
           <p>Come in for an hour of focused feedback or bring the crew for a full round. The experience shifts with the reason you walked in.</p>
         </div>
-        <figure className="visual-story__render">
-          <img src="/images/hh-lounge-render.webp" alt="Concept rendering of the Hacker’s House lounge and simulator bay" />
-          <figcaption>Concept rendering • Lounge &amp; simulator bay</figcaption>
-        </figure>
+        <LoungeRender />
         <figure className="visual-story__stock visual-card--one visual-story__hospitality">
           <img src="/images/hh-hospitality-detail.webp" alt="Unbranded beer, wine, and zero-proof hospitality concept" />
           <figcaption>Hospitality concept • Beer, wine &amp; zero-proof</figcaption>
