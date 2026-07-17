@@ -112,7 +112,8 @@ export default function Home() {
           <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> Shot analysis</span></div>
           <div className="shot-visual" aria-hidden="true">
             <span className="shot-target-line" />
-            <span className="shot-club" />
+            <img className="shot-driver" src="/images/driver-impact.webp" alt="" width="1649" height="954" fetchPriority="high" />
+            <span className="shot-tee" />
             <span className="shot-trail" />
             <span className="shot-ball" />
             <span className="shot-impact" />
