@@ -111,12 +111,11 @@ export default function Home() {
         <div className="sim-card" aria-label="Animated conceptual launch monitor displaying club and impact data">
           <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> Shot analysis</span></div>
           <div className="shot-visual" aria-hidden="true">
-            <div className="impact-frames">
-              <img className="impact-frame impact-frame--1" src="/images/impact-frame-1.webp" alt="" width="1672" height="941" fetchPriority="high" />
-              <img className="impact-frame impact-frame--2" src="/images/impact-frame-2.webp" alt="" width="1672" height="941" />
-              <img className="impact-frame impact-frame--3" src="/images/impact-frame-3.webp" alt="" width="1672" height="941" />
-              <img className="impact-frame impact-frame--4" src="/images/impact-frame-4.webp" alt="" width="1672" height="941" />
-              <img className="impact-frame impact-frame--5" src="/images/impact-frame-5.webp" alt="" width="1672" height="941" />
+            <div className="impact-media">
+              <img className="impact-video-poster" src="/images/impact-video-poster.webp" alt="" width="1440" height="664" fetchPriority="high" />
+              <video className="impact-video" autoPlay loop muted playsInline preload="auto" poster="/images/impact-video-poster.webp">
+                <source src="/videos/impact-slow-motion.mp4" type="video/mp4" />
+              </video>
             </div>
             <div className="shot-captured"><b>Impact captured</b><small>Club + ball data synchronized</small></div>
           </div>
