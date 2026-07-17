@@ -108,19 +108,25 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="sim-card" aria-label="Conceptual simulator session display">
-          <div className="sim-topline"><span>Bay 01</span><span>Practice mode</span></div>
-          <div className="sim-course">
-            <span className="target-ring ring-1" /><span className="target-ring ring-2" />
-            <span className="target-pin" />
-            <p>Indoor Golf <b>•</b> Year-Round</p>
+        <div className="sim-card" aria-label="Animated conceptual launch monitor displaying club and impact data">
+          <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> Shot analysis</span></div>
+          <div className="shot-visual" aria-hidden="true">
+            <span className="shot-target-line" />
+            <span className="shot-club" />
+            <span className="shot-trail" />
+            <span className="shot-ball" />
+            <span className="shot-impact" />
+            <div className="shot-captured"><b>Impact captured</b><small>Club + ball data synchronized</small></div>
           </div>
-          <div className="sim-metrics">
-            <div><span>Carry</span><strong>248</strong><small>YD</small></div>
-            <div><span>Club speed</span><strong>104</strong><small>MPH</small></div>
-            <div><span>Result</span><strong>8</strong><small>YD R</small></div>
+          <div className="tech-cluster">
+            <article className="metric-1" title="How fast the clubhead is traveling at impact."><span>Clubhead speed</span><strong>107.4</strong><small>MPH</small></article>
+            <article className="metric-2" title="The horizontal direction of the clubhead relative to the target line."><span>Club path</span><strong>+2.1°</strong><small>In-to-out</small></article>
+            <article className="metric-3" title="Where the clubface is pointing relative to the target at impact."><span>Face angle</span><strong>−0.7°</strong><small>Closed</small></article>
+            <article className="metric-4" title="Whether the club is moving down or up when it strikes the ball."><span>Attack angle</span><strong>−3.8°</strong><small>Down</small></article>
+            <article className="metric-5" title="Strike efficiency calculated by dividing ball speed by clubhead speed."><span>Smash factor</span><strong>1.48</strong><small>Efficient</small></article>
+            <article className="metric-6 impact-metric" title="The exact point where the ball was struck on the clubface."><span>Impact location</span><div className="impact-face"><i /></div><small>High center</small></article>
           </div>
-          <div className="mode-tabs"><span className="active">Practice</span><span>League</span><span>Event</span></div>
+          <div className="mode-tabs"><span className="active">Shot data</span><span>Club</span><span>Impact</span></div>
         </div>
 
         <div className="hero-index"><span>01</span><i /><span>06</span></div>
