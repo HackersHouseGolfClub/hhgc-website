@@ -1,8 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hhgc-website",
-  "compatibility_date": "2026-07-14",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-07-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "no_bundle": true,
   "assets": {
-    "directory": "./public"
-  }
+    "directory": "./dist/client",
+    "binding": "ASSETS"
+  },
+  "observability": { "enabled": true }
 }

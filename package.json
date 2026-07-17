@@ -1,13 +1,31 @@
 {
-  "name": "hhgc-website-v1",
-  "version": "2.0.0",
+  "name": "hhgc-website",
+  "version": "3.0.0",
   "private": true,
-  "description": "Hacker's House Golf Club immersive charcoal-first pre-launch website for Cloudflare Workers static assets.",
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
   "scripts": {
-    "build": "echo \"Static site: no build step required.\"",
+    "dev": "vite",
+    "build": "vinext build",
     "deploy": "wrangler deploy"
   },
+  "dependencies": {
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
   "devDependencies": {
-    "wrangler": "^4.110.0"
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.110.0"
   }
 }
