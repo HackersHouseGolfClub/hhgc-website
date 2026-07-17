@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ICON = "/assets/images/hhgc-icon-cream.png";
 
@@ -16,6 +16,7 @@ const Arrow = () => <span aria-hidden="true">↗</span>;
 
 function ImpactLab() {
   const section = useRef<HTMLElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     let frame = 0;
@@ -38,8 +39,24 @@ function ImpactLab() {
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
-  const rotation = -28 + progress * 58;
-  const tilt = 8 - progress * 16;
+  useEffect(() => {
+    const node = section.current;
+    const media = video.current;
+    if (!node || !media || window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) {
+      void media.play().catch(() => undefined);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void media.play().catch(() => undefined);
+      else media.pause();
+    }, { threshold: .08, rootMargin: "220px 0px" });
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      media.pause();
+    };
+  }, []);
   return (
     <section className="impact-lab" ref={section} id="impact">
       <div className="impact-sticky">
@@ -49,10 +66,15 @@ function ImpactLab() {
           <p>From face contact to launch and carry, the simulator turns every swing into information you can actually use.</p>
           <div className="impact-progress"><i style={{ width: `${Math.max(6, progress * 100)}%` }} /><span>{String(Math.round(progress * 100)).padStart(2, "0")}%</span></div>
         </div>
-        <div className="club-stage" style={{ "--club-rotate": `${rotation}deg`, "--club-tilt": `${tilt}deg`, "--club-lift": `${Math.sin(progress * Math.PI) * -24}px` } as CSSProperties}>
-          <span className="club-orbit orbit-a" /><span className="club-orbit orbit-b" />
-          <img className="clubface" src="/images/clubface.webp" alt="Rendered forged iron face showing an impact mark" />
-          <div className="impact-point"><span /><b>Impact</b><small>High center</small></div>
+        <div className="impact-film-stage" style={{ transform: `translate3d(0,${Math.sin(progress * Math.PI) * -18}px,0) rotateY(${(progress - .5) * 8}deg)` }}>
+          <span className="impact-film-orbit orbit-a" /><span className="impact-film-orbit orbit-b" />
+          <div className="impact-film-frame">
+            <img className="impact-film-poster" src="/images/impact-video-poster.webp" alt="" width="1440" height="664" loading="lazy" />
+            <video ref={video} className="impact-film-video" loop muted playsInline preload="none" poster="/images/impact-video-poster.webp" aria-hidden="true">
+              <source src="/videos/impact-slow-motion.mp4" type="video/mp4" />
+            </video>
+            <div className="impact-film-meta"><span>High-speed impact</span><b>10.0 sec / 60 fps</b></div>
+          </div>
         </div>
         <div className="impact-data">
           <article style={{ opacity: Math.min(1, progress * 4) }}><span>01 / Face angle</span><strong>−1.2°</strong><small>Closed</small></article>
@@ -67,26 +89,32 @@ function ImpactLab() {
 
 function LoungeRender() {
   const figure = useRef<HTMLElement>(null);
-  const [poweredOn, setPoweredOn] = useState(false);
+  const hasPoweredOn = useRef(false);
+  const [screenState, setScreenState] = useState<"off" | "on" | "down">("off");
 
   useEffect(() => {
     const node = figure.current;
     if (!node) return;
     if (!("IntersectionObserver" in window)) {
-      setPoweredOn(true);
+      setScreenState("on");
       return;
     }
     const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      setPoweredOn(true);
-      observer.disconnect();
-    }, { threshold: .42, rootMargin: "0px 0px -8% 0px" });
+      if (!hasPoweredOn.current && entry.intersectionRatio >= .42) {
+        hasPoweredOn.current = true;
+        setScreenState("on");
+        return;
+      }
+      if (hasPoweredOn.current && entry.boundingClientRect.top < 0 && entry.intersectionRatio < .9) {
+        setScreenState("down");
+      }
+    }, { threshold: [0, .18, .3, .42, .58, .78, .9], rootMargin: "0px 0px -8% 0px" });
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <figure ref={figure} className={`visual-story__render lounge-render${poweredOn ? " is-powered" : ""}`}>
+    <figure ref={figure} className={`visual-story__render lounge-render is-${screenState}`}>
       <img src="/images/hh-lounge-render.webp" alt="Concept rendering of the Hacker’s House lounge and simulator bay" />
       <span className="sim-screen-display" aria-hidden="true">
         <img className="sim-screen-logo" src={ICON} alt="" />
@@ -139,16 +167,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="sim-card" aria-label="Animated conceptual launch monitor displaying club and impact data">
-          <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> Shot analysis</span></div>
-          <div className="shot-visual" aria-hidden="true">
-            <div className="impact-media">
-              <img className="impact-video-poster" src="/images/impact-video-poster.webp" alt="" width="1440" height="664" fetchPriority="high" />
-              <video className="impact-video" autoPlay loop muted playsInline preload="auto" poster="/images/impact-video-poster.webp">
-                <source src="/videos/impact-slow-motion.mp4" type="video/mp4" />
-              </video>
+        <div className="sim-card sim-card--ready" aria-label="Conceptual launch monitor displaying club and impact data">
+          <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> System ready</span></div>
+          <div className="shot-visual shot-visual--ready" aria-hidden="true">
+            <div className="bay-ready-mark">
+              <img src={ICON} alt="" />
+              <div><b>Launch monitor ready</b><small>Tracking calibrated • Bay 01</small></div>
             </div>
-            <div className="shot-captured"><b>Impact captured</b><small>Club + ball data synchronized</small></div>
+            <div className="bay-ready-scale"><i /><i /><i /><i /><i /></div>
           </div>
           <div className="tech-cluster">
             <article className="metric-1" title="How fast the clubhead is traveling at impact."><span>Clubhead speed</span><strong>107.4</strong><small>MPH</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
