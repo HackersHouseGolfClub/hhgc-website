@@ -1,10 +1,10 @@
-# Hacker's House Golf Club Website v1.2
+# Hacker's House Golf Club Website v2.0
 
 Interactive pre-launch website for Hacker's House Golf Club, prepared for Cloudflare Workers Static Assets with Git integration.
 
 ## Release Status
 
-- Website version: **v1.2 — Pre-Launch Credibility & Detail Pass**
+- Website version: **v2.0 — Immersive Charcoal Experience**
 - Project folder: Marketing / Website
 - Deployment method: Cloudflare Workers Builds with Git integration
 - Public pricing: intentionally withheld pending owner approval and financial validation
@@ -24,6 +24,14 @@ Interactive pre-launch website for Hacker's House Golf Club, prepared for Cloudf
 - Removed the unfinished lead form and mail-to fallback.
 - Added an honest “Founding List opens soon” section describing what will be available after lead intake is ready.
 - Added a basic privacy page, canonical URL, structured data, improved metadata, and updated sitemap.
+
+## V2.0 Experience Pass
+
+- Reframed the site around a modern charcoal-first visual system while retaining approved cream, forest, and gold brand colors.
+- Added a custom HH cursor for fine-pointer devices with a standard-cursor fallback on touch and reduced-motion devices.
+- Added a scroll-driven Impact Lab with a dimensional club face, animated ball flight, and example impact data.
+- Increased use of the approved HH broken-club icon as a subtle environmental motif.
+- Preserved all pre-launch confidentiality gates and intentionally withheld claims.
 
 ## Repository Structure
 
