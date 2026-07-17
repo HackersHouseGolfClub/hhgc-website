@@ -111,12 +111,11 @@ export default function Home() {
         <div className="sim-card" aria-label="Animated conceptual launch monitor displaying club and impact data">
           <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> Shot analysis</span></div>
           <div className="shot-visual" aria-hidden="true">
-            <span className="shot-target-line" />
-            <img className="shot-driver" src="/images/driver-impact.webp" alt="" width="1649" height="954" fetchPriority="high" />
-            <span className="shot-tee" />
-            <span className="shot-trail" />
-            <span className="shot-ball" />
-            <span className="shot-impact" />
+            <div className="impact-frames">
+              <img className="impact-frame impact-frame--1" src="/images/impact-frame-1.webp" alt="" width="1672" height="941" fetchPriority="high" />
+              <img className="impact-frame impact-frame--2" src="/images/impact-frame-2.webp" alt="" width="1672" height="941" />
+              <img className="impact-frame impact-frame--3" src="/images/impact-frame-3.webp" alt="" width="1672" height="941" />
+            </div>
             <div className="shot-captured"><b>Impact captured</b><small>Club + ball data synchronized</small></div>
           </div>
           <div className="tech-cluster">
