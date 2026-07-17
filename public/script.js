@@ -293,3 +293,97 @@ if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
 
 const year = document.querySelector('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
+
+// HH cursor — a restrained desktop-only brand detail.
+const cursorDot = document.querySelector('[data-cursor-dot]');
+const cursorRing = document.querySelector('[data-cursor-ring]');
+if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
+  let targetX = -100;
+  let targetY = -100;
+  let ringX = -100;
+  let ringY = -100;
+
+  window.addEventListener('pointermove', (event) => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    cursorDot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+    cursorDot.classList.add('is-visible');
+    cursorRing.classList.add('is-visible');
+  }, { passive: true });
+
+  document.querySelectorAll('a, button, .interactive-tilt').forEach((item) => {
+    item.addEventListener('pointerenter', () => cursorRing.classList.add('is-active'));
+    item.addEventListener('pointerleave', () => cursorRing.classList.remove('is-active'));
+  });
+
+  const followCursor = () => {
+    ringX += (targetX - ringX) * 0.14;
+    ringY += (targetY - ringY) * 0.14;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    requestAnimationFrame(followCursor);
+  };
+  followCursor();
+}
+
+// Scroll-driven club-face story. No external 3D library is required.
+const impactLab = document.querySelector('[data-impact-lab]');
+const clubFace = document.querySelector('[data-club-face]');
+const impactBall = document.querySelector('[data-impact-ball]');
+const impactProgress = document.querySelector('[data-impact-progress]');
+const impactStep = document.querySelector('[data-impact-step]');
+const impactPoint = document.querySelector('.impact-point');
+const impactTrace = document.querySelector('.impact-trace path');
+const impactSpeed = document.querySelector('[data-impact-speed]');
+const impactFace = document.querySelector('[data-impact-face]');
+const impactLaunch = document.querySelector('[data-impact-launch]');
+const impactCarry = document.querySelector('[data-impact-carry]');
+let impactTriggered = false;
+
+function updateImpactLab() {
+  if (!impactLab || !clubFace || reduceMotion) return;
+  const rect = impactLab.getBoundingClientRect();
+  const range = Math.max(1, rect.height - window.innerHeight);
+  const progress = Math.min(1, Math.max(0, -rect.top / range));
+  const eased = 1 - Math.pow(1 - progress, 3);
+  const rotationY = -42 + eased * 116;
+  const rotationX = 10 - Math.sin(progress * Math.PI) * 23;
+  const rotationZ = -8 + progress * 18;
+  clubFace.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg) translateZ(${Math.sin(progress * Math.PI) * 50}px)`;
+  if (impactProgress) impactProgress.style.width = `${progress * 100}%`;
+
+  const hitPhase = Math.min(1, Math.max(0, (progress - .36) / .25));
+  if (impactBall) {
+    const x = hitPhase * 360;
+    const y = -Math.pow(hitPhase, .78) * 190;
+    impactBall.style.transform = `translate3d(${x}px, ${y}px, ${hitPhase * 80}px) scale(${1 - hitPhase * .42})`;
+    impactBall.style.opacity = String(1 - Math.max(0, (hitPhase - .72) / .28));
+  }
+  if (impactTrace) impactTrace.style.strokeDashoffset = String(620 - hitPhase * 620);
+
+  if (progress < .28) {
+    if (impactStep) impactStep.textContent = '01 / ADDRESS';
+  } else if (progress < .48) {
+    if (impactStep) impactStep.textContent = '02 / DELIVERY';
+  } else if (progress < .67) {
+    if (impactStep) impactStep.textContent = '03 / IMPACT';
+  } else {
+    if (impactStep) impactStep.textContent = '04 / FLIGHT';
+  }
+
+  if (progress > .47 && !impactTriggered) {
+    impactTriggered = true;
+    impactPoint?.classList.remove('is-hit');
+    requestAnimationFrame(() => impactPoint?.classList.add('is-hit'));
+  }
+  if (progress < .4) impactTriggered = false;
+
+  const speed = Math.round(82 + progress * 22);
+  if (impactSpeed) impactSpeed.textContent = String(speed);
+  if (impactFace) impactFace.textContent = `${(2.8 - progress * 2.1).toFixed(1) > 0 ? '+' : ''}${(2.8 - progress * 2.1).toFixed(1)}°`;
+  if (impactLaunch) impactLaunch.textContent = `${(11.2 + progress * 3.4).toFixed(1)}°`;
+  if (impactCarry) impactCarry.textContent = progress > .65 ? String(Math.round(188 + progress * 60)) : '—';
+}
+
+window.addEventListener('scroll', updateImpactLab, { passive: true });
+window.addEventListener('resize', updateImpactLab);
+updateImpactLab();
