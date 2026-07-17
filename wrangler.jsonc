@@ -1,10 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "hhgc-website",
+  "name": "hhgc-2",
   "main": "dist/server/index.js",
   "compatibility_date": "2026-07-17",
   "compatibility_flags": ["nodejs_compat"],
-  "no_bundle": true,
   "assets": {
     "directory": "./dist/client",
     "binding": "ASSETS"

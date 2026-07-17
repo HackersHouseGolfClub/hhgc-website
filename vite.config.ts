@@ -11,7 +11,6 @@ export default defineConfig(async () => {
         inspectorPort: false,
         config: {
           main: "./worker/index.ts",
-          compatibility_flags: ["nodejs_compat"],
         },
       }),
     ],
