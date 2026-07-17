@@ -123,7 +123,7 @@ export default function Home() {
             <article className="metric-1" title="How fast the clubhead is traveling at impact."><span>Clubhead speed</span><strong>107.4</strong><small>MPH</small></article>
             <article className="metric-2" title="The horizontal direction of the clubhead relative to the target line."><span>Club path</span><strong>+2.1°</strong><small>In-to-out</small></article>
             <article className="metric-3" title="Where the clubface is pointing relative to the target at impact."><span>Face angle</span><strong>−0.7°</strong><small>Closed</small></article>
-            <article className="metric-4" title="Whether the club is moving down or up when it strikes the ball."><span>Attack angle</span><strong>−3.8°</strong><small>Down</small></article>
+            <article className="metric-4" title="Whether the club is moving down or up when it strikes the ball."><span>Attack angle</span><strong>+2.4°</strong><small>Up</small></article>
             <article className="metric-5" title="Strike efficiency calculated by dividing ball speed by clubhead speed."><span>Smash factor</span><strong>1.48</strong><small>Efficient</small></article>
             <article className="metric-6 impact-metric" title="The exact point where the ball was struck on the clubface."><span>Impact location</span><div className="impact-face"><i /></div><small>High center</small></article>
           </div>
