@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-const ICON = "https://www.hackershousegolf.com/assets/images/hhgc-icon-cream.webp";
+const ICON = "/assets/images/hhgc-icon-cream.png";
 
 const Logo = ({ compact = false }: { compact?: boolean }) => (
   <img
     className={compact ? "brand-logo brand-logo--compact" : "brand-logo"}
-    src="https://www.hackershousegolf.com/assets/images/hhgc-logo-transparent.webp"
+    src="/assets/images/hhgc-logo-transparent.webp"
     alt="Hacker’s House Golf Club"
   />
 );
@@ -278,7 +278,7 @@ export default function Home() {
         <p className="eyebrow"><span /> Opening updates</p>
         <h2>Get in before<br />the first tee time.</h2>
         <p>The Founding List will open after registration, confirmations, and owner notifications are fully tested.</p>
-        <a className="button button--cream" href="https://www.hackershousegolf.com/#updates">Registration opens soon <Arrow /></a>
+        <a className="button button--cream" href="#updates">Registration opens soon <Arrow /></a>
         <div className="update-notes"><span>Membership releases</span><span>League announcements</span><span>Founding access</span></div>
       </section>
 
