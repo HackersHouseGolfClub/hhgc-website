@@ -14,55 +14,29 @@ const Logo = ({ compact = false }: { compact?: boolean }) => (
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
 
-function HouseCursor() {
-  const cursor = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!window.matchMedia("(pointer:fine)").matches || window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-    let x = -100;
-    let y = -100;
-    let frame = 0;
-    let active = false;
-    const render = () => {
-      frame = 0;
-      cursor.current?.style.setProperty("transform", `translate3d(${x - 23}px,${y - 23}px,0)`);
-    };
-    const move = (event: MouseEvent) => {
-      x = event.clientX;
-      y = event.clientY;
-      if (!frame) frame = window.requestAnimationFrame(render);
-    };
-    const hover = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const nextActive = Boolean(target.closest("a,button,summary"));
-      if (nextActive === active) return;
-      active = nextActive;
-      cursor.current?.classList.toggle("cursor--active", active);
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("pointerover", hover, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerover", hover);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-  return <div className="house-cursor" ref={cursor} aria-hidden="true"><img src={ICON} alt="" /></div>;
-}
-
 function ImpactLab() {
   const section = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const update = () => {
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
       if (!section.current) return;
       const rect = section.current.getBoundingClientRect();
       const range = Math.max(1, section.current.offsetHeight - window.innerHeight);
       setProgress(Math.max(0, Math.min(1, -rect.top / range)));
     };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
   const rotation = -28 + progress * 58;
   const tilt = 8 - progress * 16;
@@ -94,7 +68,6 @@ function ImpactLab() {
 export default function Home() {
   return (
     <main>
-      <HouseCursor />
       <header className="site-header">
         <a className="logo-link" href="#top" aria-label="Hacker’s House home">
           <Logo compact />
