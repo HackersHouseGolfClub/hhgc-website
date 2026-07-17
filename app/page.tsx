@@ -16,7 +16,6 @@ const Arrow = () => <span aria-hidden="true">↗</span>;
 
 function ImpactLab() {
   const section = useRef<HTMLElement>(null);
-  const video = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     let frame = 0;
@@ -39,24 +38,6 @@ function ImpactLab() {
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
-  useEffect(() => {
-    const node = section.current;
-    const media = video.current;
-    if (!node || !media || window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-    if (!("IntersectionObserver" in window)) {
-      void media.play().catch(() => undefined);
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) void media.play().catch(() => undefined);
-      else media.pause();
-    }, { threshold: .08, rootMargin: "220px 0px" });
-    observer.observe(node);
-    return () => {
-      observer.disconnect();
-      media.pause();
-    };
-  }, []);
   const rotation = -28 + progress * 58;
   const tilt = 8 - progress * 16;
   return (
@@ -73,19 +54,10 @@ function ImpactLab() {
           <img className="clubface" src="/images/clubface.webp" alt="Rendered forged iron face showing an impact mark" />
           <div className="impact-point"><span /><b>Impact</b><small>High center</small></div>
         </div>
-        <div className="impact-story-rail">
-          <div className="impact-film-frame">
-            <img className="impact-film-poster" src="/images/impact-video-poster.webp" alt="" width="1440" height="664" loading="lazy" />
-            <video ref={video} className="impact-film-video" loop muted playsInline preload="none" poster="/images/impact-video-poster.webp" aria-hidden="true">
-              <source src="/videos/impact-slow-motion.mp4" type="video/mp4" />
-            </video>
-            <div className="impact-film-meta"><span>High-speed impact</span><b>10.0 sec / 60 fps</b></div>
-          </div>
-          <div className="impact-data">
-            <article style={{ opacity: Math.min(1, progress * 4) }}><span>01 / Face angle</span><strong>−1.2°</strong><small>Closed</small></article>
-            <article style={{ opacity: Math.max(0, Math.min(1, (progress - .28) * 4)) }}><span>02 / Ball speed</span><strong>148.6</strong><small>MPH</small></article>
-            <article style={{ opacity: Math.max(0, Math.min(1, (progress - .56) * 4)) }}><span>03 / Carry</span><strong>248</strong><small>Yards</small></article>
-          </div>
+        <div className="impact-data">
+          <article style={{ opacity: Math.min(1, progress * 4) }}><span>01 / Face angle</span><strong>−1.2°</strong><small>Closed</small></article>
+          <article style={{ opacity: Math.max(0, Math.min(1, (progress - .28) * 4)) }}><span>02 / Ball speed</span><strong>148.6</strong><small>MPH</small></article>
+          <article style={{ opacity: Math.max(0, Math.min(1, (progress - .56) * 4)) }}><span>03 / Carry</span><strong>248</strong><small>Yards</small></article>
         </div>
         <img className="impact-hh" src={ICON} alt="" aria-hidden="true" />
       </div>
