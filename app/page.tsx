@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const ICON = "/assets/images/hhgc-icon-cream.png";
 
@@ -57,6 +57,8 @@ function ImpactLab() {
       media.pause();
     };
   }, []);
+  const rotation = -28 + progress * 58;
+  const tilt = 8 - progress * 16;
   return (
     <section className="impact-lab" ref={section} id="impact">
       <div className="impact-sticky">
@@ -66,8 +68,12 @@ function ImpactLab() {
           <p>From face contact to launch and carry, the simulator turns every swing into information you can actually use.</p>
           <div className="impact-progress"><i style={{ width: `${Math.max(6, progress * 100)}%` }} /><span>{String(Math.round(progress * 100)).padStart(2, "0")}%</span></div>
         </div>
-        <div className="impact-film-stage" style={{ transform: `translate3d(0,${Math.sin(progress * Math.PI) * -18}px,0) rotateY(${(progress - .5) * 8}deg)` }}>
-          <span className="impact-film-orbit orbit-a" /><span className="impact-film-orbit orbit-b" />
+        <div className="club-stage" style={{ "--club-rotate": `${rotation}deg`, "--club-tilt": `${tilt}deg`, "--club-lift": `${Math.sin(progress * Math.PI) * -24}px` } as CSSProperties}>
+          <span className="club-orbit orbit-a" /><span className="club-orbit orbit-b" />
+          <img className="clubface" src="/images/clubface.webp" alt="Rendered forged iron face showing an impact mark" />
+          <div className="impact-point"><span /><b>Impact</b><small>High center</small></div>
+        </div>
+        <div className="impact-story-rail">
           <div className="impact-film-frame">
             <img className="impact-film-poster" src="/images/impact-video-poster.webp" alt="" width="1440" height="664" loading="lazy" />
             <video ref={video} className="impact-film-video" loop muted playsInline preload="none" poster="/images/impact-video-poster.webp" aria-hidden="true">
@@ -75,11 +81,11 @@ function ImpactLab() {
             </video>
             <div className="impact-film-meta"><span>High-speed impact</span><b>10.0 sec / 60 fps</b></div>
           </div>
-        </div>
-        <div className="impact-data">
-          <article style={{ opacity: Math.min(1, progress * 4) }}><span>01 / Face angle</span><strong>−1.2°</strong><small>Closed</small></article>
-          <article style={{ opacity: Math.max(0, Math.min(1, (progress - .28) * 4)) }}><span>02 / Ball speed</span><strong>148.6</strong><small>MPH</small></article>
-          <article style={{ opacity: Math.max(0, Math.min(1, (progress - .56) * 4)) }}><span>03 / Carry</span><strong>248</strong><small>Yards</small></article>
+          <div className="impact-data">
+            <article style={{ opacity: Math.min(1, progress * 4) }}><span>01 / Face angle</span><strong>−1.2°</strong><small>Closed</small></article>
+            <article style={{ opacity: Math.max(0, Math.min(1, (progress - .28) * 4)) }}><span>02 / Ball speed</span><strong>148.6</strong><small>MPH</small></article>
+            <article style={{ opacity: Math.max(0, Math.min(1, (progress - .56) * 4)) }}><span>03 / Carry</span><strong>248</strong><small>Yards</small></article>
+          </div>
         </div>
         <img className="impact-hh" src={ICON} alt="" aria-hidden="true" />
       </div>
@@ -89,32 +95,63 @@ function ImpactLab() {
 
 function LoungeRender() {
   const figure = useRef<HTMLElement>(null);
-  const hasPoweredOn = useRef(false);
-  const [screenState, setScreenState] = useState<"off" | "on" | "down">("off");
 
   useEffect(() => {
     const node = figure.current;
     if (!node) return;
-    if (!("IntersectionObserver" in window)) {
-      setScreenState("on");
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!hasPoweredOn.current && entry.intersectionRatio >= .42) {
-        hasPoweredOn.current = true;
-        setScreenState("on");
-        return;
-      }
-      if (hasPoweredOn.current && entry.boundingClientRect.top < 0 && entry.intersectionRatio < .9) {
-        setScreenState("down");
-      }
-    }, { threshold: [0, .18, .3, .42, .58, .78, .9], rootMargin: "0px 0px -8% 0px" });
-    observer.observe(node);
-    return () => observer.disconnect();
+    let frame = 0;
+    let listening = false;
+    const smoothstep = (start: number, end: number, value: number) => {
+      const amount = Math.max(0, Math.min(1, (value - start) / (end - start)));
+      return amount * amount * (3 - 2 * amount);
+    };
+    const update = () => {
+      frame = 0;
+      const rect = node.getBoundingClientRect();
+      const travel = window.innerHeight + rect.height;
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / travel));
+      const screenPower = smoothstep(.05, .35, progress) * (1 - smoothstep(.7, .96, progress));
+      const logoPower = smoothstep(.18, .46, progress) * (1 - smoothstep(.64, .88, progress));
+      node.style.setProperty("--screen-power", screenPower.toFixed(3));
+      node.style.setProperty("--screen-scale", (.015 + screenPower * .985).toFixed(3));
+      node.style.setProperty("--screen-brightness", (.2 + screenPower * .8).toFixed(3));
+      node.style.setProperty("--logo-power", logoPower.toFixed(3));
+      node.style.setProperty("--logo-scale", (.9 + logoPower * .1).toFixed(3));
+      node.style.setProperty("--logo-blur", `${((1 - logoPower) * 10).toFixed(2)}px`);
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    const start = () => {
+      if (listening) return;
+      listening = true;
+      window.addEventListener("scroll", schedule, { passive: true });
+      window.addEventListener("resize", schedule, { passive: true });
+      schedule();
+    };
+    const stop = () => {
+      if (!listening) return;
+      listening = false;
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      update();
+    };
+    if (!("IntersectionObserver" in window)) start();
+    const observer = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+      else stop();
+    }, { rootMargin: "30% 0px" }) : null;
+    if (observer) observer.observe(node);
+    update();
+    return () => {
+      observer?.disconnect();
+      stop();
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
-    <figure ref={figure} className={`visual-story__render lounge-render is-${screenState}`}>
+    <figure ref={figure} className="visual-story__render lounge-render">
       <img src="/images/hh-lounge-render.webp" alt="Concept rendering of the Hacker’s House lounge and simulator bay" />
       <span className="sim-screen-display" aria-hidden="true">
         <img className="sim-screen-logo" src={ICON} alt="" />
@@ -165,26 +202,6 @@ export default function Home() {
             <a className="button button--gold" href="#experience">Explore the club <Arrow /></a>
             <a className="text-link" href="#events">Events &amp; groups <span aria-hidden="true">↓</span></a>
           </div>
-        </div>
-
-        <div className="sim-card sim-card--ready" aria-label="Conceptual launch monitor displaying club and impact data">
-          <div className="sim-topline"><span>Bay 01</span><span className="sim-status"><i /> System ready</span></div>
-          <div className="shot-visual shot-visual--ready" aria-hidden="true">
-            <div className="bay-ready-mark">
-              <img src={ICON} alt="" />
-              <div><b>Launch monitor ready</b><small>Tracking calibrated • Bay 01</small></div>
-            </div>
-            <div className="bay-ready-scale"><i /><i /><i /><i /><i /></div>
-          </div>
-          <div className="tech-cluster">
-            <article className="metric-1" title="How fast the clubhead is traveling at impact."><span>Clubhead speed</span><strong>107.4</strong><small>MPH</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
-            <article className="metric-2" title="The horizontal direction of the clubhead relative to the target line."><span>Club path</span><strong>+2.1°</strong><small>In-to-out</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
-            <article className="metric-3" title="Where the clubface is pointing relative to the target at impact."><span>Face angle</span><strong>−0.7°</strong><small>Closed</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
-            <article className="metric-4" title="Whether the club is moving down or up when it strikes the ball."><span>Attack angle</span><strong>+2.4°</strong><small>Up</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
-            <article className="metric-5" title="Strike efficiency calculated by dividing ball speed by clubhead speed."><span>Smash factor</span><strong>1.48</strong><small>Efficient</small><i className="metric-gauge" aria-hidden="true"><b /></i></article>
-            <article className="metric-6 impact-metric" title="The exact point where the ball was struck on the clubface."><span>Impact location</span><div className="impact-face"><i /></div><small>High center</small></article>
-          </div>
-          <div className="mode-tabs"><span className="active">Shot data</span><span>Club</span><span>Impact</span></div>
         </div>
 
         <div className="hero-index"><span>01</span><i /><span>06</span></div>
