@@ -17,18 +17,34 @@ const Arrow = () => <span aria-hidden="true">↗</span>;
 function HouseCursor() {
   const cursor = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!window.matchMedia("(pointer:fine)").matches) return;
+    if (!window.matchMedia("(pointer:fine)").matches || window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    let x = -100;
+    let y = -100;
+    let frame = 0;
+    let active = false;
+    const render = () => {
+      frame = 0;
+      cursor.current?.style.setProperty("transform", `translate3d(${x - 23}px,${y - 23}px,0)`);
+    };
     const move = (event: MouseEvent) => {
-      cursor.current?.style.setProperty("--cursor-x", `${event.clientX}px`);
-      cursor.current?.style.setProperty("--cursor-y", `${event.clientY}px`);
+      x = event.clientX;
+      y = event.clientY;
+      if (!frame) frame = window.requestAnimationFrame(render);
     };
     const hover = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      cursor.current?.classList.toggle("cursor--active", Boolean(target.closest("a,button,summary")));
+      const nextActive = Boolean(target.closest("a,button,summary"));
+      if (nextActive === active) return;
+      active = nextActive;
+      cursor.current?.classList.toggle("cursor--active", active);
     };
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", hover);
-    return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseover", hover); };
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("pointerover", hover, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerover", hover);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
   return <div className="house-cursor" ref={cursor} aria-hidden="true"><img src={ICON} alt="" /></div>;
 }
