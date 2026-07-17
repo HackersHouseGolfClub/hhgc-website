@@ -115,6 +115,8 @@ export default function Home() {
               <img className="impact-frame impact-frame--1" src="/images/impact-frame-1.webp" alt="" width="1672" height="941" fetchPriority="high" />
               <img className="impact-frame impact-frame--2" src="/images/impact-frame-2.webp" alt="" width="1672" height="941" />
               <img className="impact-frame impact-frame--3" src="/images/impact-frame-3.webp" alt="" width="1672" height="941" />
+              <img className="impact-frame impact-frame--4" src="/images/impact-frame-4.webp" alt="" width="1672" height="941" />
+              <img className="impact-frame impact-frame--5" src="/images/impact-frame-5.webp" alt="" width="1672" height="941" />
             </div>
             <div className="shot-captured"><b>Impact captured</b><small>Club + ball data synchronized</small></div>
           </div>
